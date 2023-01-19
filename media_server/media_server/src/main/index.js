@@ -2,8 +2,6 @@ import express from 'express';
 import http from 'http';
 import { Server } from "socket.io";
 import {createWorker} from "mediasoup";
-import media_codec from "./config/media_codec.js";
-import createWebRtcTransport from "./util/create_webRTC_transport.js";
 import {Level4_1, ProfileConstrainedHigh, profileLevelIdToString} from "h264-profile-level-id";
 
 const app = express();
@@ -23,7 +21,9 @@ client.on('connection', async (socket) => {
     let producers = new Map()
     let consumers = new Map()
 
-    socket.on("start-streaming", async (streamer) => {
+    socket.on("start-and-get-rtpCapabilities",  async (streamer, callback) => {
+        console.log(streamer, "is trying to start streaming")
+
         routers.set(streamer, await worker.createRouter({
             mediaCodecs: [
                 {
@@ -48,18 +48,62 @@ client.on('connection', async (socket) => {
                 }
             ]
         }))
-    })
 
-    socket.on("get-rtpCapabilities",  (streamer, callback) => {
         const rtpCapabilities = routers.get(streamer).rtpCapabilities
         callback({ rtpCapabilities })
     })
 
     socket.on("create-webRTC-transport", async (streamer, callback) => {
-        producerTransports.set(streamer, await createWebRtcTransport(callback))
+        console.log("creating webRTC Transport")
+        try {
+            const webRtcTransport_options = {
+                listenIps: [
+                    {
+                        ip: '192.168.201.136', // replace with relevant IP address
+                    }
+                ],
+                enableUdp: true,
+                enableTcp: true,
+                preferUdp: true,
+            }
+
+            // https://mediasoup.org/documentation/v3/mediasoup/api/#router-createWebRtcTransport
+            let transport = await routers.get(streamer).createWebRtcTransport(webRtcTransport_options)
+
+            transport.on('dtlsstatechange', dtlsState => {
+                if (dtlsState === 'closed') {
+                    transport.close()
+                }
+            })
+
+            transport.on('close', () => {
+                console.log('transport closed')
+            })
+
+            // send back to the client the following prameters
+            callback({
+                // https://mediasoup.org/documentation/v3/mediasoup-client/api/#TransportOptions
+                params: {
+                    id: transport.id,
+                    iceParameters: transport.iceParameters,
+                    iceCandidates: transport.iceCandidates,
+                    dtlsParameters: transport.dtlsParameters,
+                }
+            })
+
+            producerTransports.set(streamer, transport)
+        } catch (error) {
+            console.log(error)
+            callback({
+                params: {
+                    error: error
+                }
+            })
+        }
     })
 
     socket.on('send-transport-connect', async (streamer, { dtlsParameters }) => {
+        console.log("connecting to ProducerTransport")
         await producerTransports.get(streamer).connect({ dtlsParameters })
     })
 
