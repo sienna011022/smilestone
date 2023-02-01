@@ -5,12 +5,13 @@ import com.smilestone.smarket_api.user.controller.dto.UserCreateRequest;
 import com.smilestone.smarket_api.user.entity.User;
 import com.smilestone.smarket_api.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
-public class UserService {
+public class UserService extends UserDetailsService {
     private final UserRepository userRepository;
 
     @Transactional
