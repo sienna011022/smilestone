@@ -1,5 +1,4 @@
 import styled from "styled-components";
-// import theme from "styles/theme";
 
 const HeaderSize = styled.div`
   position: fixed;
@@ -26,8 +25,6 @@ const LogoWrapper = styled.div`
   display: flex;
   align-items: center;
   padding-bottom: 10px;
-  font-family: "ImcreSoojin";
-  color: #ff8a3d;
   cursor: pointer;
 `;
 
@@ -37,25 +34,43 @@ const SearchBarWrapper = styled.div`
   margin-left: 1rem;
   margin-right: auto;
   padding-right: 10px;
-  border-radius: 5px;
+  background-color: #ececec;
+  border-radius: 15px;
+
+  .magnifier {
+    margin-right: 10px;
+    width: 30px;
+    :hover {
+      cursor: pointer;
+    }
+  }
+
+  @media (min-width: 320px) and (max-width: 480px) {
+    display: none;
+  }
+
   @media (max-width: 690px) {
+    width: 300px;
   }
 
   @media (min-width: 691px) and (max-width: 890px) {
-    width: 50%;
+    width: 350px;
   }
 
   @media (min-width: 891px) {
-    width: 300px;
+    width: 400px;
   }
 `;
 
 const SearchBar = styled.input`
   border: none;
   border-radius: 5px;
-  margin: 8px 0 8px 10px;
-  font-size: 16px;
+  /* margin: 8px 0 8px 10px; */
+  margin: 10px 0 10px 10px;
+  padding-left: 10px;
+  font-size: 18px;
   width: 100%;
+  background-color: #ececec;
   color: gray;
 
   :focus {
@@ -66,7 +81,7 @@ const SearchBar = styled.input`
 
 const NavMenu = styled.ul`
   @media (max-width: 890px) {
-    position: absolute;
+    /* position: absolute;
     top: 60px;
     right: 0px;
     flex-direction: row;
@@ -88,7 +103,7 @@ const NavMenu = styled.ul`
       margin: auto;
       color: #4d5159;
       width: max-content;
-    }
+    } */
   }
 
   @media (min-width: 891px) {
@@ -104,45 +119,11 @@ const NavMenu = styled.ul`
   }
 `;
 
-const NavButton = styled.button`
-  @media (max-width: 690px) {
-    margin-left: 10px;
-    border: none;
-    padding-top: 5px;
-    background-color: transparent;
-    color: #ff8a3d;
-    font-size: 30px;
-    font-weight: bold;
-  }
-
-  @media (min-width: 691px) and (max-width: 890px) {
-    margin-left: 80px;
-    border: none;
-    padding-top: 5px;
-    background-color: transparent;
-    color: #ff8a3d;
-    font-size: 30px;
-    font-weight: bold;
-  }
-
-  @media (min-width: 891px) {
-    display: none;
-  }
-`;
-
-const ChatButtonWrapper = styled.div`
-  svg {
-    position: absolute;
-    top: -2px;
-    right: -2px;
-    color: #ff8a3d;
-  }
-`;
+const ChatButtonWrapper = styled.div``;
 
 const ChatButton = styled.button`
   @media (max-width: 690px) {
     margin-left: 10px;
-    height: fit-content;
   }
 
   @media (min-width: 691px) and (max-width: 890px) {
@@ -151,15 +132,19 @@ const ChatButton = styled.button`
   @media (min-width: 891px) {
   }
   margin-left: 20px;
-  padding: 8px 30px;
-  border: 1px solid #d0d3d8;
-  border-radius: 0.3rem;
-  width: 150px;
+  padding: 10px 30px;
+  border: 1px solid #ff8a3d;
+  border-radius: 2rem;
+  width: 120px;
   background-color: transparent;
-  color: #4d5159;
+  color: #ff8a3d;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
+  :hover {
+    background-color: #ff8a3d;
+    color: white;
+  }
 `;
 
 export {
@@ -169,7 +154,6 @@ export {
   SearchBarWrapper,
   SearchBar,
   NavMenu,
-  NavButton,
   ChatButton,
   ChatButtonWrapper,
 };
