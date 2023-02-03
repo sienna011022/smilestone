@@ -11,7 +11,7 @@ import {
 } from "./HeaderStyled";
 import { IoSearchOutline } from "react-icons/io5";
 import { To, useNavigate } from "react-router-dom";
-import Logo from "../img/sMarketLogo.png";
+const Logo = require("../img/sMarketLogo.png");
 
 const Header = () => {
   const [isSearchFocus, setIsSearchFocus] = useState(false);
