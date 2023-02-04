@@ -8,10 +8,10 @@ import {
   NavMenu,
   ChatButtonWrapper,
   ChatButton,
-} from "./HeaderStyled";
+} from "../header/HeaderStyled";
 import { IoSearchOutline } from "react-icons/io5";
 import { To, useNavigate } from "react-router-dom";
-const Logo = require("../img/sMarketLogo.png");
+const Logo = require("../../img/sMarketLogo.png");
 
 const Header = () => {
   const [isSearchFocus, setIsSearchFocus] = useState(false);
