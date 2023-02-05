@@ -3,7 +3,7 @@ spring:
     include: mysql
 
   application:
-    name: user-server
+    name: api-server
 
 server:
   port: 8080
@@ -24,4 +24,4 @@ management:
         include: "*"
 jwt:
   secret:
-    key: x!A%D*G-KaPdSgVkYp3s5v8y/B?E(H+M
+    key: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
