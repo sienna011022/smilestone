@@ -7,7 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.springframework.util.Assert.hasText;
 
@@ -29,9 +30,12 @@ public class User extends BaseEntity {
     @Column(nullable = false, length = 30, unique = true)
     private String email;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Authority> roles = new ArrayList<>();
+
     @Builder
-    private User(Long id, LocalDateTime createdAt, LocalDateTime updatedAt, String userId, String password, String name, String email) {
-        super(id, createdAt, updatedAt);
+    private User(Long id, String userId, String password, String name, String email,List<Authority> roles) {
+        super(id);
 
         hasText(userId, "아이디를 입력하세요");
         hasText(name, "이름을 입력하세요");
@@ -42,10 +46,24 @@ public class User extends BaseEntity {
         this.password = PasswordFactory.encryptPassword(password);
         this.name = name;
         this.email = email;
+        this.roles = roles;
     }
 
     public boolean isValid(SignInRequest request){
         return PasswordFactory.isValid(request.getPassword(),this.password);
+    }
+
+    public void roles(List<Authority> roles){
+        this.roles = roles;
+        roles.forEach(role -> role.user(this));
+    }
+
+    public List<String> getRolesName(){
+        List<String> roles = new ArrayList<>();
+        for(int i = 0 ; i < this.roles.size(); i++){
+            roles.add(this.roles.get(i).getName());
+        }
+        return roles;
     }
 
 }
