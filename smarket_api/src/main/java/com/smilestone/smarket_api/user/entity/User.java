@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.springframework.util.Assert.hasText;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @Getter
 @Entity
 @Table(name = "tbl_user")

@@ -15,7 +15,6 @@ import static org.springframework.http.ResponseEntity.status;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/users")
-
 public class UserController {
     private final UserService userService;
 
