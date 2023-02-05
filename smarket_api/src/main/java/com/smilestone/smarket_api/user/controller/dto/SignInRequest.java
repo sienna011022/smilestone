@@ -8,12 +8,12 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public class SignInRequest {
 
-    private String memberId;
+    private String userId;
     private String password;
 
     @Builder
-    public SignInRequest(String memberId, String password) {
-        this.memberId = memberId;
+    private SignInRequest(String userId, String password) {
+        this.userId = userId;
         this.password = password;
     }
 }
