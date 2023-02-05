@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordFactory passwordFactory;
     private final JwtFactory jwtProvider;
 
-    @Transactional
+    @Transactional(value = "masterTransactionManager")
     public void createUser(SignUpRequest request) {
         findUser(request.getUserId());
         User requestUser = request.toUser();
