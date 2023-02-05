@@ -83,7 +83,7 @@ const SearchBar = styled.input`
 const NavMenu = styled.ul`
   @media (max-width: 890px) {
     position: absolute;
-    top: 60px;
+    top: 70px;
     right: 0px;
     flex-direction: row;
     align-items: center;
@@ -94,13 +94,17 @@ const NavMenu = styled.ul`
     background-color: white;
     list-style: none;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 15px;
 
     li {
       flex-direction: column;
       margin: auto;
       color: #4d5159;
+      padding: 10px 0 10px 0;
       width: max-content;
+      :hover {
+        color: #ff8a3d;
+      }
     }
   }
 
