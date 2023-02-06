@@ -34,7 +34,7 @@ public class User extends BaseEntity {
     private List<Authority> roles = new ArrayList<>();
 
     @Builder
-    private User(Long id, String userId, String password, String name, String email,List<Authority> roles) {
+    private User(Long id, String userId, String password, String name, String email, List<Authority> roles) {
         super(id);
 
         hasText(userId, "아이디를 입력하세요");
@@ -49,21 +49,21 @@ public class User extends BaseEntity {
         this.roles = roles;
     }
 
-    public boolean isValid(SignInRequest request){
-        return PasswordFactory.isValid(request.getPassword(),this.password);
+    public boolean isValid(SignInRequest request) {
+        return PasswordFactory.isValid(request.getPassword(), this.password);
     }
 
-    public void roles(List<Authority> roles){
+    public void roles(List<Authority> roles) {
         this.roles = roles;
         roles.forEach(role -> role.user(this));
     }
 
-    public List<String> getRolesName(){
-        List<String> roles = new ArrayList<>();
-        for(int i = 0 ; i < this.roles.size(); i++){
-            roles.add(this.roles.get(i).getName());
-        }
-        return roles;
+    public List<String> getRolesName() {
+        List<String> roleNames = new ArrayList<>();
+        roles.stream()
+            .forEach(role -> roleNames.add(role.getName())
+            );
+        return roleNames;
     }
 
 }

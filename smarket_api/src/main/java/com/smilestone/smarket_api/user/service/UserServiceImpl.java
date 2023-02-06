@@ -8,11 +8,11 @@ import com.smilestone.smarket_api.user.controller.dto.SignUpRequest;
 import com.smilestone.smarket_api.user.entity.PasswordFactory;
 import com.smilestone.smarket_api.user.entity.User;
 import com.smilestone.smarket_api.user.repository.UserRepository;
-import com.smilestone.smarket_api.user.security.JwtFactory;
+import com.smilestone.smarket_api.user.entity.JwtFactory;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 import static com.smilestone.smarket_api.user.controller.dto.SignInResponse.createSignInResponse;
 import static com.smilestone.smarket_api.user.controller.dto.SignInResponse.signAcceptResponse;
@@ -34,11 +34,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public SignInResponse signIn(SignInRequest request) {
         User user = userRepository.findByUserId(request.getUserId())
-            .orElseThrow(() -> new UsernameNotFoundException("아이디가 존재하지 않습니다"));
+            .orElseThrow(() -> new Error("아이디가 존재하지 않습니다"));
 
         passwordFactory.isValid(request.getPassword(), user.getPassword());
 
-        String jwt = jwtProvider.createToken(user.getUserId(), user.getRoles());
+        String jwt = jwtProvider.createToken(user.getUserId(), user.getRolesName());
         return createSignInResponse(request, jwt, user.getRolesName());
     }
 

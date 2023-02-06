@@ -1,4 +1,4 @@
-package com.smilestone.smarket_api.user.security;
+package com.smilestone.smarket_api.user.entity;
 
 import com.smilestone.smarket_api.user.entity.Authority;
 import com.smilestone.smarket_api.user.service.CustomUserDetailsService;
@@ -35,14 +35,12 @@ public class JwtFactory {
     private String salt;
     private Key secretKey;
 
-    private final CustomUserDetailsService userDetailsService;
-
     @PostConstruct
     protected void init() {
         secretKey = hmacShaKeyFor(salt.getBytes(StandardCharsets.UTF_8));
     }
 
-    public String createToken(String user, List<Authority> roles) {
+    public String createToken(String user, List<String> roles) {
         Claims claims = claims().setSubject(user);
         claims.put(ROLES, roles);
         Date now = new Date();
@@ -54,38 +52,5 @@ public class JwtFactory {
             .signWith(secretKey, SignatureAlgorithm.HS256)
             .compact();
     }
-
-    public Authentication getAuthentication(String token) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(getAccount(token));
-        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
-    }
-
-    public String getAccount(String token) {
-        return Jwts.parserBuilder()
-            .setSigningKey(secretKey)
-            .build()
-            .parseClaimsJws(token)
-            .getBody()
-            .getSubject();
-    }
-
-    public String getTokenFrom(HttpServletRequest request) {
-        return request.getHeader(AUTHORIZATION_HEADER);
-    }
-
-    public boolean validateToken(String token) {
-        try {
-            if (!token.substring(0,TYPE_OF_AUTHORIZATION.length()).equalsIgnoreCase(TYPE_OF_AUTHORIZATION)) {
-                return false;
-            } else {
-                token = token.split(" ")[1].trim();
-            }
-            Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token);
-            return !claims.getBody().getExpiration().before(new Date());
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
 
 }
