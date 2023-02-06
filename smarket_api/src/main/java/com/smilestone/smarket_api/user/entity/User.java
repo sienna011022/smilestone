@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,8 +36,8 @@ public class User extends BaseEntity {
     private List<Authority> roles = new ArrayList<>();
 
     @Builder
-    private User(Long id, String userId, String password, String name, String email, List<Authority> roles) {
-        super(id);
+    private User(Long id, LocalDateTime createdAt, LocalDateTime updatedAt, String userId, String password, String name, String email, List<Authority> roles) {
+        super(id, updatedAt, createdAt);
 
         hasText(userId, "아이디를 입력하세요");
         hasText(name, "이름을 입력하세요");
@@ -49,10 +51,6 @@ public class User extends BaseEntity {
         this.roles = roles;
     }
 
-    public boolean isValid(SignInRequest request) {
-        return PasswordFactory.isValid(request.getPassword(), this.password);
-    }
-
     public void roles(List<Authority> roles) {
         this.roles = roles;
         roles.forEach(role -> role.user(this));
@@ -61,8 +59,7 @@ public class User extends BaseEntity {
     public List<String> getRolesName() {
         List<String> roleNames = new ArrayList<>();
         roles.stream()
-            .forEach(role -> roleNames.add(role.getName())
-            );
+            .forEach(role -> roleNames.add(role.getName()));
         return roleNames;
     }
 
