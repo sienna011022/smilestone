@@ -9,8 +9,14 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ErrorControllerAdvice {
 
     @ExceptionHandler(NotFoundTokenException.class)
-    protected ResponseEntity<ErrorResponse> existsUserException(NotFoundTokenException exception){
+    protected ResponseEntity<ErrorResponse> notFoundToken(NotFoundTokenException exception){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(ErrorResponse.of(exception.getErrorType()));
+    }
+
+    @ExceptionHandler(UnAuthorizedException.class)
+    protected ResponseEntity<ErrorResponse> unauthorized(UnAuthorizedException exception){
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
             .body(ErrorResponse.of(exception.getErrorType()));
     }
 }

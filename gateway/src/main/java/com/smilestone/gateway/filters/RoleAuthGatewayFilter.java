@@ -1,19 +1,19 @@
 package com.smilestone.gateway.filters;
 
+import com.smilestone.gateway.exception.UnAuthorizedException;
+import com.smilestone.gateway.util.JwtParser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.List;
-import java.util.Map;
 
 import static io.jsonwebtoken.security.Keys.hmacShaKeyFor;
 
@@ -28,7 +28,6 @@ public class RoleAuthGatewayFilter extends AbstractGatewayFilterFactory<RoleAuth
     }
 
     public static class Config {
-        // Put configuration properties here
     }
 
     @PostConstruct
@@ -40,12 +39,9 @@ public class RoleAuthGatewayFilter extends AbstractGatewayFilterFactory<RoleAuth
     public GatewayFilter apply(Config config) {
         return ((exchange, chain) -> {
             var request = exchange.getRequest();
-            request.getHeaders().containsKey(HttpHeaders.AUTHORIZATION);
-            String authorizationHeader = request.getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
-            String jwt = authorizationHeader.replace("Bearer ", "");
-
+            String jwt = JwtParser.parseJwt(request);
             if (!isRoleValid(jwt)) {
-                throw new Error();
+                throw new UnAuthorizedException();
             }
             return chain.filter(exchange);
         });

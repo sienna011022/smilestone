@@ -1,6 +1,8 @@
 package com.smilestone.gateway.filters;
 
 import com.smilestone.gateway.exception.NotFoundTokenException;
+import com.smilestone.gateway.exception.UnAuthorizedException;
+import com.smilestone.gateway.util.JwtParser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -23,48 +25,49 @@ import static io.jsonwebtoken.security.Keys.hmacShaKeyFor;
 @Component
 @Slf4j
 public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<AuthorizationHeaderFilter.Config> {
+
+
     @Value("${jwt.secret.key}")
     private String salt;
     private Key secretKey;
+
     public static class Config {
-        // Put configuration properties here
+
     }
+
     @PostConstruct
     protected void init() {
         secretKey = hmacShaKeyFor(salt.getBytes(StandardCharsets.UTF_8));
     }
 
-    public  AuthorizationHeaderFilter(){
+    public AuthorizationHeaderFilter() {
         super(Config.class);
     }
 
     @Override
-    public GatewayFilter apply(Config config){
+    public GatewayFilter apply(Config config) {
         return ((exchange, chain) -> {
             ServerHttpRequest request = exchange.getRequest();
-
-            if(!request.getHeaders().containsKey(HttpHeaders.AUTHORIZATION)){
+            if (!request.getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
                 throw new NotFoundTokenException();
             }
-
-            String authorizationHeader = request.getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
-            String jwt = authorizationHeader.replace("Bearer ","");
-
-            if(!isJwtValid(jwt)){
-                throw new Error();
+            String jwt = JwtParser.parseJwt(request);
+            if (!isJwtValid(jwt)) {
+                throw new UnAuthorizedException();
             }
             return chain.filter(exchange);
         });
-
-
     }
 
     private boolean isJwtValid(String jwt) {
-        Jws< Claims > claims = Jwts
+        Jws<Claims> claims = Jwts
             .parserBuilder()
             .setSigningKey(secretKey)
             .build()
             .parseClaimsJws(jwt);
-        return !claims.getBody().getExpiration().before(new Date());
+
+        return !claims.getBody()
+            .getExpiration()
+            .before(new Date());
     }
 }
