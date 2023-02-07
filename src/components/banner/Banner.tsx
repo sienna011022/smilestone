@@ -1,7 +1,7 @@
 import { MainWrapper, TopArticle } from "./BannerStyled";
 const Home = require("../../img/iPhone_Home.png");
 
-const Banner = () => {
+const Banner = (): JSX.Element => {
   return (
     <>
       <MainWrapper>
