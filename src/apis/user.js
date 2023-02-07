@@ -39,7 +39,7 @@ async function getUserByToken(token) {
 // };
 
 async function signupUser(userId, password, nickName) {
-  return await fetch("https://localhost:3000/signup", {
+  return await fetch("/api/signup", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
