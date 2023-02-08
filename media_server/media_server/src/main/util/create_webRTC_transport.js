@@ -3,7 +3,7 @@ export default async function createWebRtcTransport(router, callback) {
         const webRtcTransport_options = {
             listenIps: [
                 {
-                    ip: '192.168.201.136', // replace with relevant IP address
+                    ip: '43.200.154.60', // replace with relevant IP address
                 }
             ],
             enableUdp: true,

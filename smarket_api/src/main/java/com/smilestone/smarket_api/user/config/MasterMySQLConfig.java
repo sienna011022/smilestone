@@ -1,4 +1,4 @@
-package com.smilestone.smarket_api.product.db.config;
+package com.smilestone.smarket_api.user.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
