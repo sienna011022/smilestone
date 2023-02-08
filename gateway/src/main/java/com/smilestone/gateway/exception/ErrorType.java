@@ -7,7 +7,8 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum ErrorType {
 
-    NOT_FOUND_TOKEN("G001", "토큰이 존재하지 않습니다");
+    NOT_FOUND_TOKEN("G001", "토큰이 존재하지 않습니다"),
+    UNAUTHORIZED_ROLES("G002","권한이 없습니다");
 
     private final String code;
     private final String message;

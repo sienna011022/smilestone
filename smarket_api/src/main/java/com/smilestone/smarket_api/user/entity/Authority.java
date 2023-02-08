@@ -14,7 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Table(name = "tbl_authority")
-public class Authority{
+public class Authority {
 
     @Id
     @GeneratedValue
@@ -27,7 +27,7 @@ public class Authority{
     @JsonIgnore
     private User user;
 
-    public void user(User user){
+    public void user(User user) {
         this.user = user;
     }
 

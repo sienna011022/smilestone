@@ -12,30 +12,26 @@ import static java.util.Collections.singletonList;
 @NoArgsConstructor
 public class SignUpRequest {
 
-    private static final String DEFAULT_ROLE  = "ROLE_USER";
+    private static final String DEFAULT_ROLE = "ROLE_USER";
 
     private String userId;
 
     private String password;
 
-    private String name;
-
-    private String email;
+    private String nickName;
 
     @Builder
-    private SignUpRequest(String userId, String password, String name, String email) {
+    private SignUpRequest(String userId, String password, String nickName) {
         this.userId = userId;
         this.password = password;
-        this.name = name;
-        this.email = email;
+        this.nickName = nickName;
     }
 
     public User toUser() {
         User newUser = User.builder()
             .userId(userId)
             .password(password)
-            .name(name)
-            .email(email)
+            .nickName(nickName)
             .build();
 
         newUser.roles(singletonList(Authority.builder()

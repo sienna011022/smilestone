@@ -20,6 +20,5 @@ public class PasswordFactory {
             throw new IllegalPasswordException();
         }
         return true;
-
     }
 }
