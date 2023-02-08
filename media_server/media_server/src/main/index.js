@@ -37,11 +37,7 @@ client.on('connection', async (socket) => {
         console.log("Creating receiving transport")
         try {
             const webRtcTransport_options = {
-                listenIps: [
-                    {
-                        ip: '192.168.201.136', // replace with relevant IP address
-                    }
-                ],
+                listenIps: [ { ip: "172.31.11.132", announcedIp: "43.200.154.60" } ],
                 enableUdp: true,
                 enableTcp: true,
                 preferUdp: true,
