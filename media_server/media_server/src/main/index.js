@@ -87,41 +87,59 @@ client.on('connection', async (socket) => {
         console.log(viewer, streamer, "consuming")
         try {
             // check if the router can consume the specified producer
-            if (routers.get(streamer).canConsume({
-                producerId: producers.get(streamer).id,
-                rtpCapabilities
-            })) {
                 // transport can now consume and return a consumer
-                const consumer = await consumerTransports.get(streamer + viewer).consume({
-                    producerId: producers.get(streamer).id,
-                    rtpCapabilities,
-                    paused: true,
-                })
+            const videoConsumer = await consumerTransports.get(streamer + viewer).consume({
+                producerId: producers.get(streamer + "video").id,
+                rtpCapabilities,
+                paused: true,
+            })
 
-                consumer.on('transportclose', () => {
-                    console.log('transport close from consumer')
-                })
+            const audioConsumer = await consumerTransports.get(streamer + viewer).consume({
+                producerId: producers.get(streamer + "audio").id,
+                rtpCapabilities,
+                paused: true,
+            })
 
-                consumer.on('producerclose', () => {
-                    console.log('producer of consumer closed')
-                })
+            videoConsumer.on('transportclose', () => {
+                console.log('transport close from consumer')
+            })
 
-                consumers.set(streamer + viewer, consumer)
+            videoConsumer.on('producerclose', () => {
+                console.log('producer of consumer closed')
+            })
 
-                // from the consumer extract the following params
-                // to send back to the Client
-                const params = {
-                    id: consumer.id,
-                    producerId: producers.get(streamer).id,
-                    kind: consumer.kind,
-                    rtpParameters: consumer.rtpParameters,
+            audioConsumer.on('transportclose', () => {
+                console.log('transport close from consumer')
+            })
+
+            audioConsumer.on('producerclose', () => {
+                console.log('producer of consumer closed')
+            })
+
+            consumers.set(streamer + viewer + "video", videoConsumer)
+            consumers.set(streamer + viewer + "audio", audioConsumer)
+
+            // from the consumer extract the following params
+            // to send back to the Client
+            const params = {
+                video : {
+                    id: videoConsumer.id,
+                    producerId: producers.get(streamer+"video").id,
+                    kind: videoConsumer.kind,
+                    rtpParameters: videoConsumer.rtpParameters,
+                },
+                audio : {
+                    id: audioConsumer.id,
+                    producerId: producers.get(streamer+"audio").id,
+                    kind: audioConsumer.kind,
+                    rtpParameters: audioConsumer.rtpParameters,
                 }
 
-                // send the parameters to the client
-                callback({ params })
-            } else {
-                console.log("nonononononononono")
             }
+
+            // send the parameters to the client
+            callback({ params })
+
         } catch (error) {
             console.log(error.message)
             callback({
@@ -134,7 +152,8 @@ client.on('connection', async (socket) => {
 
     socket.on('consumer-resume', async (viewer, streamer) => {
         console.log("consumer", streamer + viewer, "resume!!!")
-        await consumers.get(streamer + viewer).resume()
+        await consumers.get(streamer + viewer + "video").resume()
+        await consumers.get(streamer + viewer + "audio").resume()
     })
 
     socket.on("start-and-get-rtpCapabilities",  async (streamer, callback) => {
@@ -224,7 +243,7 @@ client.on('connection', async (socket) => {
             kind,
             rtpParameters,
         })
-        producers.set(streamer, producer)
+        producers.set(streamer + kind, producer)
 
         producer.on('transportclose', () => {
             console.log('transport for this producer closed ')
