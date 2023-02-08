@@ -1,11 +1,8 @@
 export default async function createWebRtcTransport(router, callback) {
+    console.log("creating WebRTC Transport")
     try {
         const webRtcTransport_options = {
-            listenIps: [
-                {
-                    ip: '43.200.154.60', // replace with relevant IP address
-                }
-            ],
+            listenIps    : [ { ip: "172.31.11.132", announcedIp: "43.200.154.60" } ],
             enableUdp: true,
             enableTcp: true,
             preferUdp: true,
