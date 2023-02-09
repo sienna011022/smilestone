@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +23,7 @@ public class ProductService {
 
     @Transactional
     public List<ProductDTO> getProductsById(Long productId) {
-        return productRepository.findAllById(List.of(productId)).stream().map(ProductDTO::new).toList();
+        return productRepository.findAllById(List.of(productId)).stream().map(ProductDTO::new).collect(Collectors.toList());
     }
 
     @Transactional
