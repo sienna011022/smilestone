@@ -15,6 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.List;
+import java.util.Map;
+
 import static com.smilestone.smarket_api.user.controller.dto.SignInResponse.createSignInResponse;
 import static com.smilestone.smarket_api.user.controller.dto.SignInResponse.signAcceptResponse;
 
@@ -40,8 +43,8 @@ public class UserServiceImpl implements UserService {
 
         passwordFactory.isValid(request.getPassword(), user.getPassword());
 
-        String jwt = jwtProvider.createToken(user.getUserId(), user.getRolesName());
-        return createSignInResponse(request, jwt, user.getRolesName());
+        Map<String,String> jwts = jwtProvider.generateTokens(user.getUserId(), user.getRolesName());
+        return createSignInResponse(request, jwts, user.getRolesName());
     }
 
     @Override
