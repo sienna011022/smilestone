@@ -3,6 +3,7 @@ package com.smilestone.smarket_api.user.controller;
 import com.smilestone.smarket_api.user.controller.dto.SignInRequest;
 import com.smilestone.smarket_api.user.controller.dto.SignInResponse;
 import com.smilestone.smarket_api.user.controller.dto.SignUpRequest;
+import com.smilestone.smarket_api.user.controller.dto.SignUpResponse;
 import com.smilestone.smarket_api.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,9 +18,8 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity signUp(@RequestBody SignUpRequest request) {
-        userService.createUser(request);
-        return status(HttpStatus.CREATED).build();
+    public ResponseEntity<SignUpResponse> signUp(@RequestBody SignUpRequest request) {
+        return new ResponseEntity<>(userService.createUser(request),HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/signin")
