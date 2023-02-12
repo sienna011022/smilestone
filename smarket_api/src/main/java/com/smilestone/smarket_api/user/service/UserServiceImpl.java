@@ -5,6 +5,7 @@ import com.smilestone.smarket_api.user.common.exception.NotFoundUserException;
 import com.smilestone.smarket_api.user.controller.dto.SignInRequest;
 import com.smilestone.smarket_api.user.controller.dto.SignInResponse;
 import com.smilestone.smarket_api.user.controller.dto.SignUpRequest;
+import com.smilestone.smarket_api.user.controller.dto.SignUpResponse;
 import com.smilestone.smarket_api.user.entity.PasswordFactory;
 import com.smilestone.smarket_api.user.entity.User;
 import com.smilestone.smarket_api.user.repository.UserRepository;
@@ -25,10 +26,11 @@ public class UserServiceImpl implements UserService {
     private final JwtFactory jwtProvider;
 
     @Transactional(value = "masterTransactionManager")
-    public void createUser(SignUpRequest request) {
+    public SignUpResponse createUser(SignUpRequest request) {
         findUser(request.getUserId());
         User requestUser = request.toUser();
-        userRepository.save(requestUser);
+        User savedUser = userRepository.save(requestUser);
+        return SignUpResponse.createSignUpResponse(savedUser);
     }
 
     @Override
