@@ -19,8 +19,7 @@ public class UserTest {
     void create_user() {
         SignUpRequest request = SignUpRequest.builder()
             .userId("sienna1022")
-            .name("kimSungYoon")
-            .email("sienna011022@naver.com")
+            .nickName("kimSungYoon")
             .password("abcd")
             .build();
 
@@ -32,8 +31,7 @@ public class UserTest {
     void create_user_exception(){
         SignUpRequest errorRequest = SignUpRequest.builder()
             .userId(null)
-            .name("kimSungYoon")
-            .email("sienna011022@naver.com")
+            .nickName("kimSungYoon")
             .password("abcd")
             .build();
 

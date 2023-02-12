@@ -18,7 +18,7 @@ public class PasswordFactoryTest {
     @Test
     void isValid() {
         String inputPassword = "1234";
-        User user = MemberFixture.userCreateWithPassword(inputPassword);
+        User user = UserFixture.userCreateWithPassword(inputPassword);
         PasswordFactory.isValid(inputPassword, user.getPassword());
     }
 }
