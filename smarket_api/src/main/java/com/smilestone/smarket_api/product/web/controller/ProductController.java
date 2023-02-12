@@ -24,7 +24,7 @@ public class ProductController {
         return productService.getProductsById();
     }
 
-    @GetMapping("/product//list/all")
+    @GetMapping("/product/list/all")
     public List<ListProductDTO> getProductListById() {
         return productService.getProductListById();
     }
