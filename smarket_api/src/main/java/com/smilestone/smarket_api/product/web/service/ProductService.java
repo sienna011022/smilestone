@@ -3,10 +3,12 @@ package com.smilestone.smarket_api.product.web.service;
 import com.smilestone.smarket_api.product.db.entity.Product;
 import com.smilestone.smarket_api.product.db.repository.product.ProductRepository;
 import com.smilestone.smarket_api.product.dto.ProductDTO;
+import com.smilestone.smarket_api.product.dto.RequestProductDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,29 +17,34 @@ import java.util.stream.Collectors;
 public class ProductService {
     private final ProductRepository productRepository;
 
-    @Transactional
+    @Transactional(transactionManager = "secondTransactionManager")
     public ProductDTO getProductById(Long productId) {
         return new ProductDTO(productRepository.findById(productId).orElseGet(Product::new));
     }
 
 
-    @Transactional
-    public List<ProductDTO> getProductsById(Long productId) {
-        return productRepository.findAllById(List.of(productId)).stream().map(ProductDTO::new).collect(Collectors.toList());
+    @Transactional(transactionManager = "secondTransactionManager")
+    public List<ProductDTO> getProductsById() {
+        return productRepository.findAll().stream().map(ProductDTO::new).collect(Collectors.toList());
     }
 
-    @Transactional
-    public ProductDTO postProduct(ProductDTO product) {
+    @Transactional(transactionManager = "secondTransactionManager")
+    public ProductDTO postProduct(RequestProductDTO product) {
         return new ProductDTO(productRepository.save(new Product(
-                product.getProductId(),
+                null,
                 product.getSellerId(),
-                product.getBuyerId(),
+                null,
                 product.getTitle(),
                 product.getContent(),
                 product.getPrice(),
-                product.getState(),
-                product.getView(),
-                product.getLocalDateTime()
+                false,
+                0L,
+                LocalDateTime.now()
         )));
+    }
+
+    @Transactional(transactionManager = "secondTransactionManager")
+    public List<ProductDTO> getProductsByTitle(String title) {
+        return productRepository.getProductsByTitle(title);
     }
 }
