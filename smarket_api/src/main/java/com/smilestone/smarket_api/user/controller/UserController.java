@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 import static org.springframework.http.ResponseEntity.status;
 
 @RestController
@@ -19,7 +21,7 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity<SignUpResponse> signUp(@RequestBody SignUpRequest request) {
-        return new ResponseEntity<>(userService.createUser(request),HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.createUser(request), HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/signin")
@@ -30,6 +32,11 @@ public class UserController {
     @GetMapping("/users/signin")
     public ResponseEntity<SignInResponse> signInWithJWT(@RequestParam String userId) {
         return new ResponseEntity<>(userService.validWithJWT(userId), HttpStatus.OK);
+    }
+
+    @GetMapping("/users/token")
+    public ResponseEntity<String> updateJWT(@RequestParam UUID tokenId) {
+        return new ResponseEntity<>(userService.updateToken(tokenId), HttpStatus.OK);
     }
 
 

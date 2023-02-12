@@ -7,7 +7,9 @@ import com.smilestone.smarket_api.user.controller.dto.SignInResponse;
 import com.smilestone.smarket_api.user.controller.dto.SignUpRequest;
 import com.smilestone.smarket_api.user.controller.dto.SignUpResponse;
 import com.smilestone.smarket_api.user.entity.PasswordFactory;
+import com.smilestone.smarket_api.user.entity.Token;
 import com.smilestone.smarket_api.user.entity.User;
+import com.smilestone.smarket_api.user.repository.TokenRepository;
 import com.smilestone.smarket_api.user.repository.UserRepository;
 import com.smilestone.smarket_api.user.entity.JwtFactory;
 import lombok.RequiredArgsConstructor;
@@ -15,17 +17,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.Map;
+import java.util.UUID;
+
 import static com.smilestone.smarket_api.user.controller.dto.SignInResponse.createSignInResponse;
 import static com.smilestone.smarket_api.user.controller.dto.SignInResponse.signAcceptResponse;
 
 @RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
+    private static final String USER_REPOSITORY_MANAGER = "masterTransactionManager";
     private final UserRepository userRepository;
     private final PasswordFactory passwordFactory;
-    private final JwtFactory jwtProvider;
+    private final JwtFactory jwtFactory;
 
-    @Transactional(value = "masterTransactionManager")
+
+    @Transactional(value = USER_REPOSITORY_MANAGER)
     public SignUpResponse createUser(SignUpRequest request) {
         findUser(request.getUserId());
         User requestUser = request.toUser();
@@ -40,8 +47,8 @@ public class UserServiceImpl implements UserService {
 
         passwordFactory.isValid(request.getPassword(), user.getPassword());
 
-        String jwt = jwtProvider.createToken(user.getUserId(), user.getRolesName());
-        return createSignInResponse(request, jwt, user.getRolesName());
+        Map<String, String> jwts = jwtFactory.generateTokens(user.getUserId(), user.getRolesName());
+        return createSignInResponse(request, jwts, user.getRolesName());
     }
 
     @Override
@@ -51,10 +58,14 @@ public class UserServiceImpl implements UserService {
         return signAcceptResponse(user);
     }
 
+    @Override
+    public String updateToken(UUID tokenId){
+        return jwtFactory.validAndUpdateRefreshToken(tokenId);
+    }
+
     private void findUser(String userId) {
         if (userRepository.existsByUserId(userId)) {
             throw new ExistsUserException();
         }
     }
-
 }

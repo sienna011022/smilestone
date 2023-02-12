@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Builder
@@ -16,7 +17,7 @@ public class SignInResponse {
 
     private String userId;
 
-    private String token;
+    private Map<String,String> tokens;
     private List<String> roles;
 
     private SignInResponse(User user) {
@@ -24,10 +25,10 @@ public class SignInResponse {
         this.roles = user.getRolesName();
     }
 
-    public static SignInResponse createSignInResponse(SignInRequest request, String jwt, List<String> roles) {
+    public static SignInResponse createSignInResponse(SignInRequest request, Map<String,String> jwts, List<String> roles) {
         return SignInResponse.builder()
             .userId(request.getUserId())
-            .token(jwt)
+            .tokens(jwts)
             .roles(roles)
             .build();
     }
