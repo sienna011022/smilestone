@@ -37,13 +37,14 @@ spring:
         - id: API_SERVER
           uri: lb://API-SERVER
           predicates:
-            - Path=/api/signin
+            - Path=/api/signup
           filters:
             - RewritePath=/api/(?<path>.*),/$\{path}
+
         - id: API_SERVER
           uri: lb://API-SERVER
           predicates:
-            - Path=/api/signup
+            - Path=/api/signin
           filters:
             - RewritePath=/api/(?<path>.*),/$\{path}
 
@@ -57,6 +58,16 @@ spring:
             - RewritePath=/api/(?<path>.*),/$\{path}
             - name: AuthorizationHeaderFilter
             - name: RoleAuthGatewayFilter
+
+        - id: API_SERVER
+          uri: lb://API-SERVER
+          predicates:
+            - Path=/api/users/token
+            - Method=GET
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/api/(?<path>.*),/$\{path}
+
 jwt:
   secret:
     key: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
