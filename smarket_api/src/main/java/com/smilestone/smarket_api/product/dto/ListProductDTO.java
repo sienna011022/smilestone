@@ -1,9 +1,15 @@
 package com.smilestone.smarket_api.product.dto;
 
 import com.smilestone.smarket_api.product.db.entity.Product;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
+@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ListProductDTO {
     private Long productId;
     private Long sellerId;
