@@ -1,5 +1,6 @@
 package com.smilestone.gateway.filters;
 
+import com.smilestone.gateway.exception.ExpiredTokenException;
 import com.smilestone.gateway.exception.NotFoundTokenException;
 import com.smilestone.gateway.exception.UnAuthorizedException;
 import com.smilestone.gateway.util.JwtParser;
@@ -53,7 +54,7 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
             }
             String jwt = JwtParser.parseJwt(request);
             if (!isJwtValid(jwt)) {
-                throw new UnAuthorizedException();
+                throw new ExpiredTokenException();
             }
             return chain.filter(exchange);
         });
