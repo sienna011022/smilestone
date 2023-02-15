@@ -13,22 +13,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class TestController {
     private final RabbitTemplate rabbitTemplate;
-    private final ObjectMapper objectMapper;
 
     private final static String CHAT_EXCHANGE_NAME = "chat.exchange";
     private final static String CHAT_QUEUE_NAME = "chat.queue";
 
-    @Value("${spring.kafka.template.default-topic}")
-    private String topicName;
+    @MessageMapping("chat.enter.{chatRoomId}")
+    public void sendEnterMessage(ChatMessage message, @DestinationVariable String chatRoomId) {
+        rabbitTemplate.convertAndSend(CHAT_EXCHANGE_NAME, "chatroom." + chatRoomId, message);
+    }
 
-//    @MessageMapping("/hello")
-//    public void greeting(User user) throws Exception {
-//        messageTemplate.convertAndSend("/topic/greetin", new Greeting(user.name));
-//    }
-
-    @MessageMapping("/chat")
-    public void sendAllToRoom(ChatMessage message, @DestinationVariable String chatRoomId) throws Exception {
-        rabbitTemplate.convertAndSend(CHAT_EXCHANGE_NAME, chatRoomId, message);
+    @MessageMapping("chat.message.{chatRoomId}")
+    public void sendMessage(ChatMessage message, @DestinationVariable String chatRoomId) {
+        rabbitTemplate.convertAndSend(CHAT_EXCHANGE_NAME, "chatroom." + chatRoomId, message);
     }
 
     @RabbitListener(queues = CHAT_QUEUE_NAME)
