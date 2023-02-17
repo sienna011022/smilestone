@@ -1,18 +1,8 @@
 package com.smilestone.chat_server.rabbitmq;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.rabbitmq.client.ShutdownSignalException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
-import org.springframework.amqp.rabbit.connection.Connection;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.rabbit.connection.ConnectionListener;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
@@ -30,10 +20,20 @@ public class RabbitConfig {
     private static final String ROUTING_KEY = "chatroom.*";
 
     @Bean
+    Jackson2JsonMessageConverter messageConverter() {
+        return new Jackson2JsonMessageConverter();
+    }
+
+    @Bean
     public CachingConnectionFactory connectionFactory() {
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory("192.168.201.128");
         connectionFactory.setUsername("test");
         connectionFactory.setPassword("test");
+        connectionFactory.setConnectionLimit(1);
+        connectionFactory.setRequestedHeartBeat(3000);
+        connectionFactory.setChannelCacheSize(10);
+        connectionFactory.setConnectionCacheSize(1);
+        connectionFactory.setCacheMode(CachingConnectionFactory.CacheMode.CHANNEL);
         return connectionFactory;
     }
 
@@ -42,6 +42,14 @@ public class RabbitConfig {
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
         container.setConnectionFactory(connectionFactory());
         container.setQueueNames(CHAT_QUEUE_NAME);
+        container.setMessageListener(new MessageListener() {
+            @Override
+            public void onMessage(Message message) {
+                System.out.println("received" + message);
+            }
+        });
+        container.setMaxConcurrentConsumers(10);
+        container.setConcurrentConsumers(1);
         return container;
     }
 
