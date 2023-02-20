@@ -46,11 +46,18 @@ public class UserController {
         return new ResponseEntity<>(userService.checkDuplicate(userId), HttpStatus.OK);
     }
 
-    @PostMapping("/users")
+    @PostMapping("/users/info/nickName")
     public ResponseEntity<UserInfoResponse> changeNickName(@RequestParam String nickName,
-                                                         @RequestParam String newNickName) {
-        return new ResponseEntity<>(userService.change(nickName, newNickName), HttpStatus.OK);
+                                                           @RequestParam String newNickName) {
+        return new ResponseEntity<>(userService.changeNickName(nickName, newNickName), HttpStatus.OK);
     }
 
+    @PostMapping("/users/info/password")
+    public ResponseEntity changePassword(@RequestParam Long id,
+                                         @RequestParam String password,
+                                         @RequestParam String newPassword) {
+        userService.changePassword(id, password, newPassword);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 }

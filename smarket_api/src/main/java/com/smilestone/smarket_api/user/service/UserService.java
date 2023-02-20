@@ -17,5 +17,7 @@ public interface UserService {
 
     Boolean checkDuplicate(String userId);
 
-    UserInfoResponse change(String nickName, String newNickName);
+    UserInfoResponse changeNickName(String nickName, String newNickName);
+
+    void changePassword(Long id,String password, String newPassword);
 }

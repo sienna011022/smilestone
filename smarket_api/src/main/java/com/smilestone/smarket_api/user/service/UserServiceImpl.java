@@ -71,12 +71,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserInfoResponse change(String nickName, String newNickName) {
+    public UserInfoResponse changeNickName(String nickName, String newNickName) {
         User user = userRepository.findByNickName(nickName)
             .orElseThrow(NotFoundUserException::new);
-        user.change(newNickName);
+        user.changeNickName(newNickName);
         User newUser = userRepository.save(user);
         return UserInfoResponse.of(newUser);
+    }
+
+    @Override
+    public void changePassword(Long id, String password, String newPassword) {
+        User user = userRepository.findById(id)
+            .orElseThrow(NotFoundUserException::new);
+        passwordFactory.isValid(password, user.getPassword());
+        user.changePassword(passwordFactory.encryptPassword(newPassword));
+        userRepository.save(user);
     }
 
     private void findUser(String userId) {
