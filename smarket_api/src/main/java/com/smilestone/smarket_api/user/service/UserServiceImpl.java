@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
         passwordFactory.isValid(request.getPassword(), user.getPassword());
 
         Map<String, String> jwts = jwtFactory.generateTokens(user.getUserId(), user.getRolesName());
-        return createSignInResponse(request, jwts, user.getRolesName());
+        return createSignInResponse(request, jwts, user);
     }
 
     @Override

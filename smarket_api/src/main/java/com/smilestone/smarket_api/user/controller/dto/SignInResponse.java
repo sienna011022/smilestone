@@ -15,25 +15,28 @@ import java.util.Map;
 @NoArgsConstructor
 public class SignInResponse {
 
+    private Long id;
     private String userId;
 
-    private Map<String,String> tokens;
+    private Map<String, String> tokens;
     private List<String> roles;
 
     private SignInResponse(User user) {
         this.userId = user.getUserId();
         this.roles = user.getRolesName();
+        this.id = user.getId();
     }
 
-    public static SignInResponse createSignInResponse(SignInRequest request, Map<String,String> jwts, List<String> roles) {
+    public static SignInResponse createSignInResponse(SignInRequest request, Map<String, String> jwts, User user) {
         return SignInResponse.builder()
+            .id(user.getId())
             .userId(request.getUserId())
             .tokens(jwts)
-            .roles(roles)
+            .roles(user.getRolesName())
             .build();
     }
 
-    public static SignInResponse signAcceptResponse(User user){
+    public static SignInResponse signAcceptResponse(User user) {
         return new SignInResponse(user);
     }
 }
