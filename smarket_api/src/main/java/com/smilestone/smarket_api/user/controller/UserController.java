@@ -1,9 +1,6 @@
 package com.smilestone.smarket_api.user.controller;
 
-import com.smilestone.smarket_api.user.controller.dto.SignInRequest;
-import com.smilestone.smarket_api.user.controller.dto.SignInResponse;
-import com.smilestone.smarket_api.user.controller.dto.SignUpRequest;
-import com.smilestone.smarket_api.user.controller.dto.SignUpResponse;
+import com.smilestone.smarket_api.user.controller.dto.*;
 import com.smilestone.smarket_api.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -39,5 +36,28 @@ public class UserController {
         return new ResponseEntity<>(userService.updateToken(tokenId), HttpStatus.OK);
     }
 
+    @GetMapping("/users")
+    public ResponseEntity<UserInfoResponse> updateJWT(@RequestParam Long id) {
+        return new ResponseEntity<>(userService.allInfoBy(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/users/check")
+    public ResponseEntity<Boolean> checkDuplicate(@RequestParam String userId) {
+        return new ResponseEntity<>(userService.checkDuplicate(userId), HttpStatus.OK);
+    }
+
+    @PostMapping("/users/info/nickName")
+    public ResponseEntity<UserInfoResponse> changeNickName(@RequestParam String nickName,
+                                                           @RequestParam String newNickName) {
+        return new ResponseEntity<>(userService.changeNickName(nickName, newNickName), HttpStatus.OK);
+    }
+
+    @PostMapping("/users/info/password")
+    public ResponseEntity changePassword(@RequestParam Long id,
+                                         @RequestParam String password,
+                                         @RequestParam String newPassword) {
+        userService.changePassword(id, password, newPassword);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 }

@@ -2,14 +2,9 @@ package com.smilestone.smarket_api.user.service;
 
 import com.smilestone.smarket_api.user.common.exception.ExistsUserException;
 import com.smilestone.smarket_api.user.common.exception.NotFoundUserException;
-import com.smilestone.smarket_api.user.controller.dto.SignInRequest;
-import com.smilestone.smarket_api.user.controller.dto.SignInResponse;
-import com.smilestone.smarket_api.user.controller.dto.SignUpRequest;
-import com.smilestone.smarket_api.user.controller.dto.SignUpResponse;
+import com.smilestone.smarket_api.user.controller.dto.*;
 import com.smilestone.smarket_api.user.entity.PasswordFactory;
-import com.smilestone.smarket_api.user.entity.Token;
 import com.smilestone.smarket_api.user.entity.User;
-import com.smilestone.smarket_api.user.repository.TokenRepository;
 import com.smilestone.smarket_api.user.repository.UserRepository;
 import com.smilestone.smarket_api.user.entity.JwtFactory;
 import lombok.RequiredArgsConstructor;
@@ -54,13 +49,43 @@ public class UserServiceImpl implements UserService {
     @Override
     public SignInResponse validWithJWT(String userId) {
         User user = userRepository.findByUserId(userId)
-            .orElseThrow(() -> new NotFoundUserException());
+            .orElseThrow(NotFoundUserException::new);
         return signAcceptResponse(user);
     }
 
     @Override
-    public String updateToken(UUID tokenId){
+    public String updateToken(UUID tokenId) {
         return jwtFactory.validAndUpdateRefreshToken(tokenId);
+    }
+
+    @Override
+    public UserInfoResponse allInfoBy(Long id) {
+        User user = userRepository.findById(id)
+            .orElseThrow(NotFoundUserException::new);
+        return UserInfoResponse.of(user);
+    }
+
+    @Override
+    public Boolean checkDuplicate(String userId) {
+        return userRepository.existsByUserId(userId);
+    }
+
+    @Override
+    public UserInfoResponse changeNickName(String nickName, String newNickName) {
+        User user = userRepository.findByNickName(nickName)
+            .orElseThrow(NotFoundUserException::new);
+        user.changeNickName(newNickName);
+        User newUser = userRepository.save(user);
+        return UserInfoResponse.of(newUser);
+    }
+
+    @Override
+    public void changePassword(Long id, String password, String newPassword) {
+        User user = userRepository.findById(id)
+            .orElseThrow(NotFoundUserException::new);
+        passwordFactory.isValid(password, user.getPassword());
+        user.changePassword(passwordFactory.encryptPassword(newPassword));
+        userRepository.save(user);
     }
 
     private void findUser(String userId) {
