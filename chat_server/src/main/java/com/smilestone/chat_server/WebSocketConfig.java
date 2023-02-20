@@ -42,7 +42,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         ThreadPoolTaskScheduler taskScheduler = new ThreadPoolTaskScheduler();
         taskScheduler.setPoolSize(100);
         taskScheduler.initialize();
-        registry.enableSimpleBroker("/chat").setTaskScheduler(taskScheduler);
+        registry.enableSimpleBroker("/chat", "/alarm").setTaskScheduler(taskScheduler);
         registry.setApplicationDestinationPrefixes("/pub");
         registry.setPathMatcher(new AntPathMatcher("."));
     }

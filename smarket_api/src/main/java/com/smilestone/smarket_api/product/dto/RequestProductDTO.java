@@ -14,4 +14,5 @@ public class RequestProductDTO {
     private String title;
     private String content;
     private Long price;
+    private String category;
 }

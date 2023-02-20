@@ -13,23 +13,23 @@ import java.time.LocalDateTime;
 public class ProductDTO {
     private Long productId;
     private Long sellerId;
-    private Long buyerId;
     private String title;
     private String content;
     private Long price;
+    private String category;
     private Boolean state;
     private Long view;
-    private LocalDateTime localDateTime;
+    private LocalDateTime createdAt;
 
     public ProductDTO(Product product) {
         this.productId = product.getProductId();
         this.sellerId = product.getSellerId();
-        this.buyerId = product.getBuyerId();
         this.title = product.getTitle();
         this.content = product.getContent();
         this.price = product.getPrice();
         this.state = product.getState();
         this.view = product.getView();
-        this.localDateTime = product.getLocalDateTime();
+        this.category = product.getCategory();
+        this.createdAt = product.getCreatedAt();
     }
 }

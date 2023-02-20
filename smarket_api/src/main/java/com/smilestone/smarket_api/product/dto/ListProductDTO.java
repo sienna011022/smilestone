@@ -17,7 +17,8 @@ public class ListProductDTO {
     private Long price;
     private Boolean state;
     private Long view;
-    private LocalDateTime localDateTime;
+    private String category;
+    private LocalDateTime createdAt;
 
     public ListProductDTO(Product product) {
         this.productId = product.getProductId();
@@ -26,6 +27,7 @@ public class ListProductDTO {
         this.price = product.getPrice();
         this.state = product.getState();
         this.view = product.getView();
-        this.localDateTime = product.getLocalDateTime();
+        this.category = product.getCategory();
+        this.createdAt = product.getCreatedAt();
     }
 }

@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface ProductRepositoryCustom{
     List<ListProductDTO> getProductsByTitle(String title);
+
+    List<Long> getProductBuyers(Long productId);
 }

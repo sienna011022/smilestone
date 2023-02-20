@@ -16,7 +16,7 @@ public class TestController {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @MessageMapping("chat.{chatRoomId}")
-    public void sendEnterMessage(ChatMessage message, @DestinationVariable String chatRoomId) throws JsonProcessingException {
+    public void sendMessage(ChatMessage message, @DestinationVariable String chatRoomId) throws JsonProcessingException {
         template.convertAndSend("/chat/" + chatRoomId, objectMapper.writeValueAsString(message));
     }
 }

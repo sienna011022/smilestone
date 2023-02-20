@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,12 +30,6 @@ public class ProductService {
     }
 
     @Transactional(transactionManager = "secondTransactionManager")
-    public List<ListProductDTO> getProductsByIdBuyerId(Long buyerId) {
-        return productRepository.findAllByBuyerId(buyerId).stream().map(ListProductDTO::new).collect(Collectors.toList());
-    }
-
-
-    @Transactional(transactionManager = "secondTransactionManager")
     public List<ProductDTO> getProductsById() {
         return productRepository.findAll().stream().map(ProductDTO::new).collect(Collectors.toList());
     }
@@ -49,18 +44,39 @@ public class ProductService {
         return new ProductDTO(productRepository.save(new Product(
                 null,
                 product.getSellerId(),
-                null,
                 product.getTitle(),
                 product.getContent(),
                 product.getPrice(),
                 false,
                 0L,
-                LocalDateTime.now()
+                product.getCategory(),
+                LocalDateTime.now(),
+                new ArrayList<>()
         )));
     }
 
     @Transactional(transactionManager = "secondTransactionManager")
     public List<ListProductDTO> getProductsByTitle(String title) {
         return productRepository.getProductsByTitle(title);
+    }
+
+    @Transactional(transactionManager = "secondTransactionManager")
+    public List<Long> getProductBuyers(Long productId) {
+        return productRepository.getProductBuyers(productId);
+    }
+
+    @Transactional(transactionManager = "secondTransactionManager")
+    public void updateProduct(ProductDTO productDTO) {
+        productRepository.findById(productDTO.getProductId()).orElse(new Product()).update(productDTO);
+    }
+
+    @Transactional(transactionManager = "secondTransactionManager")
+    public void deleteProduct(Long productId) {
+        productRepository.delete(new Product(productId));
+    }
+
+    @Transactional(transactionManager = "secondTransactionManager")
+    public List<ListProductDTO> getCategoryProducts(String category) {
+        return productRepository.findAllByCategory(category).stream().map(ListProductDTO::new).collect(Collectors.toList());
     }
 }
