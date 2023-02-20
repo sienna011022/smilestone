@@ -48,6 +48,14 @@ spring:
           filters:
             - RewritePath=/api/(?<path>.*),/$\{path}
 
+
+        - id: API_SERVER
+          uri: lb://API-SERVER
+          predicates:
+            - Path=/api/check
+          filters:
+            - RewritePath=/api/(?<path>.*),/$\{path}
+
         - id: API_SERVER
           uri: lb://API-SERVER
           predicates:
