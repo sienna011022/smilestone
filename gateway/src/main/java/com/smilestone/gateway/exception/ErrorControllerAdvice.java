@@ -19,4 +19,5 @@ public class ErrorControllerAdvice {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
             .body(ErrorResponse.of(exception.getErrorType()));
     }
+
 }
