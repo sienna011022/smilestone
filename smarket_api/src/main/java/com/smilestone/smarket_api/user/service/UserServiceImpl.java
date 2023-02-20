@@ -4,9 +4,7 @@ import com.smilestone.smarket_api.user.common.exception.ExistsUserException;
 import com.smilestone.smarket_api.user.common.exception.NotFoundUserException;
 import com.smilestone.smarket_api.user.controller.dto.*;
 import com.smilestone.smarket_api.user.entity.PasswordFactory;
-import com.smilestone.smarket_api.user.entity.Token;
 import com.smilestone.smarket_api.user.entity.User;
-import com.smilestone.smarket_api.user.repository.TokenRepository;
 import com.smilestone.smarket_api.user.repository.UserRepository;
 import com.smilestone.smarket_api.user.entity.JwtFactory;
 import lombok.RequiredArgsConstructor;
@@ -62,13 +60,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserInfoResponse allInfoBy(Long id) {
-        User user = userRepository.findById(id).orElseThrow(NotFoundUserException::new);
+        User user = userRepository.findById(id)
+            .orElseThrow(NotFoundUserException::new);
         return UserInfoResponse.of(user);
     }
 
     @Override
     public Boolean checkDuplicate(String userId) {
         return userRepository.existsByUserId(userId);
+    }
+
+    @Override
+    public UserInfoResponse change(String nickName, String newNickName) {
+        User user = userRepository.findByNickName(nickName)
+            .orElseThrow(NotFoundUserException::new);
+        user.change(newNickName);
+        User newUser = userRepository.save(user);
+        return UserInfoResponse.of(newUser);
     }
 
     private void findUser(String userId) {

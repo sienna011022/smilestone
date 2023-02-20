@@ -36,14 +36,20 @@ public class UserController {
         return new ResponseEntity<>(userService.updateToken(tokenId), HttpStatus.OK);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/users")
     public ResponseEntity<UserInfoResponse> updateJWT(@RequestParam Long id) {
         return new ResponseEntity<>(userService.allInfoBy(id), HttpStatus.OK);
     }
 
-    @GetMapping("/check")
-    public ResponseEntity<Boolean> checkDuplicate(@RequestParam String userId){
-        return new ResponseEntity<>(userService.checkDuplicate(userId),HttpStatus.OK);
+    @GetMapping("/users/check")
+    public ResponseEntity<Boolean> checkDuplicate(@RequestParam String userId) {
+        return new ResponseEntity<>(userService.checkDuplicate(userId), HttpStatus.OK);
+    }
+
+    @PostMapping("/users")
+    public ResponseEntity<UserInfoResponse> changeNickName(@RequestParam String nickName,
+                                                         @RequestParam String newNickName) {
+        return new ResponseEntity<>(userService.change(nickName, newNickName), HttpStatus.OK);
     }
 
 

@@ -16,4 +16,6 @@ public interface UserService {
     UserInfoResponse allInfoBy(Long id);
 
     Boolean checkDuplicate(String userId);
+
+    UserInfoResponse change(String nickName, String newNickName);
 }
