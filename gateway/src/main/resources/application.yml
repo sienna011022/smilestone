@@ -75,6 +75,7 @@ spring:
             - Path=/api/product/all
           filters:
             - RewritePath=/api/(?<path>.*),/$\{path}
+
         - id: API_SERVER
           uri: lb://API-SERVER
           predicates:
@@ -92,6 +93,16 @@ spring:
             - RewritePath=/api/(?<path>.*),/$\{path}
             - name: AuthorizationHeaderFilter
             - name: RoleAuthGatewayFilter
+        - id: API_SERVER
+          uri: lb://API-SERVER
+          predicates:
+            - Path=/api/product/post
+            - Method=GET
+          filters:
+            - RewritePath=/api/(?<path>.*),/$\{path}
+            - name: AuthorizationHeaderFilter
+            - name: RoleAuthGatewayFilter
+
         - id: API_SERVER
           uri: lb://API-SERVER
           predicates:
