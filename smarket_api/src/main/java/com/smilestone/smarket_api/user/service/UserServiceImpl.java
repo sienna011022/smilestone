@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public SignInResponse signIn(SignInRequest request) {
         User user = userRepository.findByUserId(request.getUserId())
-            .orElseThrow(() -> new Error("아이디가 존재하지 않습니다"));
+            .orElseThrow(() -> new NotFoundUserException());
 
         passwordFactory.isValid(request.getPassword(), user.getPassword());
 

@@ -51,7 +51,15 @@ spring:
         - id: API_SERVER
           uri: lb://API-SERVER
           predicates:
-            - Path=/api/users/signin
+            - Path=/api/users/token
+            - Method=GET
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/api/(?<path>.*),/$\{path}
+        - id: API_SERVER
+          uri: lb://API-SERVER
+          predicates:
+            - Path=/api/users/check
             - Method=GET
           filters:
             - RemoveRequestHeader=Cookie
@@ -62,18 +70,11 @@ spring:
         - id: API_SERVER
           uri: lb://API-SERVER
           predicates:
-            - Path=/api/users/token
-            - Method=GET
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/api/(?<path>.*),/$\{path}
-
-        - id: API_SERVER
-          uri: lb://API-SERVER
-          predicates:
             - Path=/api/product/**
           filters:
             - RewritePath=/api/(?<path>.*),/$\{path}
+
+\
 
 jwt:
   secret:
