@@ -66,6 +66,11 @@ public class UserServiceImpl implements UserService {
         return UserInfoResponse.of(user);
     }
 
+    @Override
+    public Boolean checkDuplicate(String userId) {
+        return userRepository.existsByUserId(userId);
+    }
+
     private void findUser(String userId) {
         if (userRepository.existsByUserId(userId)) {
             throw new ExistsUserException();

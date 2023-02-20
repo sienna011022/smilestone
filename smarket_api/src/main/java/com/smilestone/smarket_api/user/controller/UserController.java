@@ -41,5 +41,10 @@ public class UserController {
         return new ResponseEntity<>(userService.allInfoBy(id), HttpStatus.OK);
     }
 
+    @GetMapping("/check")
+    public ResponseEntity<Boolean> checkDuplicate(@RequestParam String userId){
+        return new ResponseEntity<>(userService.checkDuplicate(userId),HttpStatus.OK);
+    }
+
 
 }

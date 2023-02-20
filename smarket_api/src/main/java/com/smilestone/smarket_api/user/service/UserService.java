@@ -14,4 +14,6 @@ public interface UserService {
     String updateToken(UUID tokenId);
 
     UserInfoResponse allInfoBy(Long id);
+
+    Boolean checkDuplicate(String userId);
 }
