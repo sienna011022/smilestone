@@ -27,7 +27,7 @@ public class User extends BaseEntity {
     @Column(length = 20)
     private String nickName;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Authority> roles = new ArrayList<>();
 
     @Builder

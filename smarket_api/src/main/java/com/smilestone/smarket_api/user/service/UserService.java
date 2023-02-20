@@ -1,9 +1,6 @@
 package com.smilestone.smarket_api.user.service;
 
-import com.smilestone.smarket_api.user.controller.dto.SignInRequest;
-import com.smilestone.smarket_api.user.controller.dto.SignInResponse;
-import com.smilestone.smarket_api.user.controller.dto.SignUpRequest;
-import com.smilestone.smarket_api.user.controller.dto.SignUpResponse;
+import com.smilestone.smarket_api.user.controller.dto.*;
 
 import java.util.UUID;
 
@@ -15,4 +12,6 @@ public interface UserService {
     SignInResponse validWithJWT(String userId);
 
     String updateToken(UUID tokenId);
+
+    UserInfoResponse allInfoBy(Long id);
 }

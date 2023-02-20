@@ -2,10 +2,7 @@ package com.smilestone.smarket_api.user.service;
 
 import com.smilestone.smarket_api.user.common.exception.ExistsUserException;
 import com.smilestone.smarket_api.user.common.exception.NotFoundUserException;
-import com.smilestone.smarket_api.user.controller.dto.SignInRequest;
-import com.smilestone.smarket_api.user.controller.dto.SignInResponse;
-import com.smilestone.smarket_api.user.controller.dto.SignUpRequest;
-import com.smilestone.smarket_api.user.controller.dto.SignUpResponse;
+import com.smilestone.smarket_api.user.controller.dto.*;
 import com.smilestone.smarket_api.user.entity.PasswordFactory;
 import com.smilestone.smarket_api.user.entity.Token;
 import com.smilestone.smarket_api.user.entity.User;
@@ -54,13 +51,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public SignInResponse validWithJWT(String userId) {
         User user = userRepository.findByUserId(userId)
-            .orElseThrow(() -> new NotFoundUserException());
+            .orElseThrow(NotFoundUserException::new);
         return signAcceptResponse(user);
     }
 
     @Override
-    public String updateToken(UUID tokenId){
+    public String updateToken(UUID tokenId) {
         return jwtFactory.validAndUpdateRefreshToken(tokenId);
+    }
+
+    @Override
+    public UserInfoResponse allInfoBy(Long id) {
+        User user = userRepository.findById(id).orElseThrow(NotFoundUserException::new);
+        return UserInfoResponse.of(user);
     }
 
     private void findUser(String userId) {

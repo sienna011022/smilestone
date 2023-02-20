@@ -1,9 +1,6 @@
 package com.smilestone.smarket_api.user.controller;
 
-import com.smilestone.smarket_api.user.controller.dto.SignInRequest;
-import com.smilestone.smarket_api.user.controller.dto.SignInResponse;
-import com.smilestone.smarket_api.user.controller.dto.SignUpRequest;
-import com.smilestone.smarket_api.user.controller.dto.SignUpResponse;
+import com.smilestone.smarket_api.user.controller.dto.*;
 import com.smilestone.smarket_api.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -37,6 +34,11 @@ public class UserController {
     @GetMapping("/users/token")
     public ResponseEntity<String> updateJWT(@RequestParam UUID tokenId) {
         return new ResponseEntity<>(userService.updateToken(tokenId), HttpStatus.OK);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<UserInfoResponse> updateJWT(@RequestParam Long id) {
+        return new ResponseEntity<>(userService.allInfoBy(id), HttpStatus.OK);
     }
 
 
