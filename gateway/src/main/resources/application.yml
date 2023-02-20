@@ -80,7 +80,7 @@ spring:
           uri: lb://API-SERVER
           predicates:
             - Path=/api/product/list/all
-            - Method=GET
+
           filters:
             - RewritePath=/api/(?<path>.*),/$\{path}
 
@@ -88,7 +88,6 @@ spring:
           uri: lb://API-SERVER
           predicates:
             - Path=/api/product/id
-            - Method=GET
           filters:
             - RewritePath=/api/(?<path>.*),/$\{path}
             - name: AuthorizationHeaderFilter
@@ -97,7 +96,6 @@ spring:
           uri: lb://API-SERVER
           predicates:
             - Path=/api/product/post
-            - Method=GET
           filters:
             - RewritePath=/api/(?<path>.*),/$\{path}
             - name: AuthorizationHeaderFilter
@@ -107,7 +105,7 @@ spring:
           uri: lb://API-SERVER
           predicates:
             - Path=/api/product/title
-            - Method=GET
+
           filters:
             - RewritePath=/api/(?<path>.*),/$\{path}
 
@@ -115,7 +113,6 @@ spring:
           uri: lb://API-SERVER
           predicates:
             - Path=/api/product/seller/all
-            - Method=GET
           filters:
             - RewritePath=/api/(?<path>.*),/$\{path}
             - name: AuthorizationHeaderFilter
@@ -125,7 +122,6 @@ spring:
           uri: lb://API-SERVER
           predicates:
             - Path=/api/product/buyer/all
-            - Method=GET
           filters:
             - RewritePath=/api/(?<path>.*),/$\{path}
             - name: AuthorizationHeaderFilter
@@ -135,7 +131,6 @@ spring:
           uri: lb://API-SERVER
           predicates:
             - Path=/api/product/purchase
-            - Method=GET
           filters:
             - RewritePath=/api/(?<path>.*),/$\{path}
 
@@ -143,7 +138,6 @@ spring:
           uri: lb://API-SERVER
           predicates:
             - Path=/api/product/delete
-            - Method=GET
           filters:
             - RewritePath=/api/(?<path>.*),/$\{path}
             - name: AuthorizationHeaderFilter
@@ -154,7 +148,6 @@ spring:
           uri: lb://API-SERVER
           predicates:
             - Path=/api/product/update
-            - Method=POST
           filters:
             - RewritePath=/api/(?<path>.*),/$\{path}
             - name: AuthorizationHeaderFilter
@@ -165,7 +158,6 @@ spring:
           uri: lb://API-SERVER
           predicates:
             - Path=/api/product/category
-            - Method=POST
           filters:
             - RewritePath=/api/(?<path>.*),/$\{path}
             - name: AuthorizationHeaderFilter
