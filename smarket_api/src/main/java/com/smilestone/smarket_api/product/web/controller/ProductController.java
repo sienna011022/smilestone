@@ -77,7 +77,7 @@ public class ProductController {
         return productService.getCategoryProducts(category);
     }
 
-    @GetMapping("/product/test/nodb")
+    @GetMapping("/test/nodb")
     public String test() {
         return "test";
     }
