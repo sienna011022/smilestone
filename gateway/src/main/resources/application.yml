@@ -47,8 +47,6 @@ spring:
             - Path=/api/signin
           filters:
             - RewritePath=/api/(?<path>.*),/$\{path}
-
-
         - id: API_SERVER
           uri: lb://API-SERVER
           predicates:
@@ -161,7 +159,6 @@ spring:
             - name: AuthorizationHeaderFilter
             - name: RoleAuthGatewayFilter
 
-
         - id: API_SERVER
           uri: lb://API-SERVER
           predicates:
@@ -170,6 +167,13 @@ spring:
             - RewritePath=/api/(?<path>.*),/$\{path}
             - name: AuthorizationHeaderFilter
             - name: RoleAuthGatewayFilter
+
+        - id: API_SERVER
+          uri: lb://API-SERVER
+          predicates:
+            - Path=/api/test/**
+          filters:
+            - RewritePath=/api/(?<path>.*),/$\{path}
 
 
 

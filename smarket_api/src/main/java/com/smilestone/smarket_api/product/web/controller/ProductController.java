@@ -76,4 +76,9 @@ public class ProductController {
     public List<ListProductDTO> updateProduct(@RequestParam String category) {
         return productService.getCategoryProducts(category);
     }
+
+    @GetMapping("/product/test/nodb")
+    public String test() {
+        return "test";
+    }
 }
