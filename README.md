@@ -12,7 +12,7 @@
   - 기술 공유를 위해서 1대1 채팅, 음성 채팅, 화상 채팅 기능을 제공
 
 ## ✨시스템 아키텍처
-![image](https://user-images.githubusercontent.com/90383376/221084674-2c638545-27e0-466b-9b27-f497ccab2035.png)
+![image](https://user-images.githubusercontent.com/90383376/221118705-042391fc-9e2e-40a5-95e2-da6ecbc0a568.png)
 
 ## ✨기술 스택
 > 해당 프로젝트를 수행하며 사용할 기술 스택입니다.
