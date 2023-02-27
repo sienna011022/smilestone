@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".info.InfoActivity">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/user_image"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/person"
+        app:civ_circle_background_color="@color/search_box"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:fontFamily="@font/notosanskr_bold"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/user_image"
+        app:layout_constraintStart_toEndOf="@id/user_image"
+        app:layout_constraintTop_toTopOf="@id/user_image" />
+
+    <TextView
+        android:id="@+id/text_business"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/notosanskr_bold"
+        android:text="나의 거래"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@id/user_image"
+        app:layout_constraintTop_toBottomOf="@id/user_image" />
+
+    <ImageView
+        android:id="@+id/image_case"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="6dp"
+        android:src="@drawable/suitcase"
+        app:layout_constraintStart_toStartOf="@id/text_business"
+        app:layout_constraintTop_toBottomOf="@id/text_business" />
+
+    <TextView
+        android:id="@+id/text_purchase"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:fontFamily="@font/notosanskr_regular"
+        android:text="구매내역"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/image_case"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/image_case"
+        app:layout_constraintTop_toTopOf="@id/image_case" />
+
+    <ImageView
+        android:id="@+id/image_sell"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/sell"
+        app:layout_constraintStart_toStartOf="@id/text_business"
+        app:layout_constraintTop_toBottomOf="@id/image_case" />
+
+    <TextView
+        android:id="@+id/text_sell"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:fontFamily="@font/notosanskr_regular"
+        android:text="판매내역"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/image_sell"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/image_sell"
+        app:layout_constraintTop_toTopOf="@id/image_sell" />
+
+    <TextView
+        android:id="@+id/text_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/notosanskr_bold"
+        android:text="계정"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@id/user_image"
+        app:layout_constraintTop_toBottomOf="@id/image_sell" />
+
+    <ImageView
+        android:id="@+id/image_logout"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="6dp"
+        android:src="@drawable/power"
+        app:layout_constraintStart_toStartOf="@id/text_user"
+        app:layout_constraintTop_toBottomOf="@id/text_user" />
+
+    <TextView
+        android:id="@+id/text_logout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:fontFamily="@font/notosanskr_regular"
+        android:text="로그아웃"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/image_logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/image_logout"
+        app:layout_constraintTop_toTopOf="@id/image_logout" />
+
+    <ImageView
+        android:id="@+id/image_change_nickname"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/radio"
+        app:layout_constraintStart_toStartOf="@id/text_user"
+        app:layout_constraintTop_toBottomOf="@id/image_logout" />
+
+    <TextView
+        android:id="@+id/text_change_nickname"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:fontFamily="@font/notosanskr_regular"
+        android:text="닉네임 변경"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/image_change_nickname"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/image_change_nickname"
+        app:layout_constraintTop_toTopOf="@id/image_change_nickname" />
+
+    <ImageView
+        android:id="@+id/image_change_password"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/pw_main"
+        app:layout_constraintStart_toStartOf="@id/text_user"
+        app:layout_constraintTop_toBottomOf="@id/image_change_nickname" />
+
+    <TextView
+        android:id="@+id/text_change_password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:fontFamily="@font/notosanskr_regular"
+        android:text="비밀번호 변경"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/image_change_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/image_change_password"
+        app:layout_constraintTop_toTopOf="@id/image_change_password" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/menu_bar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/top_border"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.1075"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/btn_home"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/home_inactive"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.5"
+            app:layout_constraintHorizontal_bias="0.15"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.067" />
+
+        <Button
+            android:id="@+id/btn_chat"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/chat"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_info"
+            app:layout_constraintHeight_percent="0.5"
+            app:layout_constraintStart_toEndOf="@id/btn_home"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.06" />
+
+        <Button
+            android:id="@+id/btn_info"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/info_active"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.5"
+            app:layout_constraintHorizontal_bias="0.85"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.102" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.helper.widget.Layer
+        android:id="@+id/layer_purchase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="image_case,text_purchase"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="24dp"
+        tools:layout_editor_absoluteY="186dp" />
+
+    <androidx.constraintlayout.helper.widget.Layer
+        android:id="@+id/layer_sell"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="image_sell,text_sell"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="24dp"
+        tools:layout_editor_absoluteY="216dp" />
+
+    <androidx.constraintlayout.helper.widget.Layer
+        android:id="@+id/layer_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="image_logout,text_logout"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="24dp"
+        tools:layout_editor_absoluteY="316dp" />
+
+    <androidx.constraintlayout.helper.widget.Layer
+        android:id="@+id/layer_change_nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="image_change_nickname,text_change_nickname"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.constraintlayout.helper.widget.Layer
+        android:id="@+id/layer_change_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="image_change_password,text_change_password"
+        tools:ignore="MissingConstraints" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">sMarket</string>
+    <string name="sign_up">회원가입</string>
+    <string name="sMarket">sMarket</string>
+    <string name="Login">Login</string>
+    <string name="Or">또는</string>
+    <string name="signup">Sign Up</string>
+    <string name="default_name">NickName</string>
+    <string name="id">ID</string>
+    <string name="nickname">닉네임</string>
+    <string name="redundancy">중복확인</string>
+    <string name="complete">완료</string>
+    <string name="exit">닫기</string>
+    <string name="input_price">가격 입력</string>
+    <string name="edit_title">글 제목</string>
+    <string name="chat_start">채팅으로 거래하기</string>
+    <string name="chatting">채팅</string>
+</resources>

@@ -1,0 +1,182 @@
+server:
+  port: 8088
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:3000"
+            allow-credentials: true
+            allowedHeaders:
+              - x-requested-with
+              - authorization
+              - content-type
+              - credential
+              - X-AUTH-TOKEN
+              - X-CSRF-TOKEN
+            allowedMethods:
+              - POST
+              - GET
+              - PUT
+              - OPTIONS
+              - DELETE
+      routes:
+        - id: API_SERVER
+          uri: lb://API-SERVER
+          predicates:
+            - Path=/api/signup
+          filters:
+            - RewritePath=/api/(?<path>.*),/$\{path}
+
+        - id: API_SERVER
+          uri: lb://API-SERVER
+          predicates:
+            - Path=/api/signin
+          filters:
+            - RewritePath=/api/(?<path>.*),/$\{path}
+        - id: API_SERVER
+          uri: lb://API-SERVER
+          predicates:
+            - Path=/api/check
+          filters:
+            - RewritePath=/api/(?<path>.*),/$\{path}
+
+        - id: API_SERVER
+          uri: lb://API-SERVER
+          predicates:
+            - Path=/api/users/token
+            - Method=GET
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/api/(?<path>.*),/$\{path}
+
+        - id: API_SERVER
+          uri: lb://API-SERVER
+          predicates:
+            - Path=/api/users/**
+
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/api/(?<path>.*),/$\{path}
+            - name: AuthorizationHeaderFilter
+            - name: RoleAuthGatewayFilter
+
+
+        - id: API_SERVER
+          uri: lb://API-SERVER
+          predicates:
+            - Path=/api/product/all
+          filters:
+            - RewritePath=/api/(?<path>.*),/$\{path}
+
+        - id: API_SERVER
+          uri: lb://API-SERVER
+          predicates:
+            - Path=/api/product/list/all
+
+          filters:
+            - RewritePath=/api/(?<path>.*),/$\{path}
+
+        - id: API_SERVER
+          uri: lb://API-SERVER
+          predicates:
+            - Path=/api/product/id
+          filters:
+            - RewritePath=/api/(?<path>.*),/$\{path}
+            - name: AuthorizationHeaderFilter
+            - name: RoleAuthGatewayFilter
+        - id: API_SERVER
+          uri: lb://API-SERVER
+          predicates:
+            - Path=/api/product/post
+          filters:
+            - RewritePath=/api/(?<path>.*),/$\{path}
+            - name: AuthorizationHeaderFilter
+            - name: RoleAuthGatewayFilter
+
+        - id: API_SERVER
+          uri: lb://API-SERVER
+          predicates:
+            - Path=/api/product/title
+
+          filters:
+            - RewritePath=/api/(?<path>.*),/$\{path}
+
+        - id: API_SERVER
+          uri: lb://API-SERVER
+          predicates:
+            - Path=/api/product/seller/all
+          filters:
+            - RewritePath=/api/(?<path>.*),/$\{path}
+            - name: AuthorizationHeaderFilter
+            - name: RoleAuthGatewayFilter
+
+        - id: API_SERVER
+          uri: lb://API-SERVER
+          predicates:
+            - Path=/api/product/buyer/all
+          filters:
+            - RewritePath=/api/(?<path>.*),/$\{path}
+            - name: AuthorizationHeaderFilter
+            - name: RoleAuthGatewayFilter
+
+        - id: API_SERVER
+          uri: lb://API-SERVER
+          predicates:
+            - Path=/api/product/purchase
+          filters:
+            - RewritePath=/api/(?<path>.*),/$\{path}
+
+        - id: API_SERVER
+          uri: lb://API-SERVER
+          predicates:
+            - Path=/api/product/delete
+          filters:
+            - RewritePath=/api/(?<path>.*),/$\{path}
+            - name: AuthorizationHeaderFilter
+            - name: RoleAuthGatewayFilter
+
+
+        - id: API_SERVER
+          uri: lb://API-SERVER
+          predicates:
+            - Path=/api/product/update
+          filters:
+            - RewritePath=/api/(?<path>.*),/$\{path}
+            - name: AuthorizationHeaderFilter
+            - name: RoleAuthGatewayFilter
+
+        - id: API_SERVER
+          uri: lb://API-SERVER
+          predicates:
+            - Path=/api/product/category
+          filters:
+            - RewritePath=/api/(?<path>.*),/$\{path}
+            - name: AuthorizationHeaderFilter
+            - name: RoleAuthGatewayFilter
+
+        - id: API_SERVER
+          uri: lb://API-SERVER
+          predicates:
+            - Path=/api/test/**
+          filters:
+            - RewritePath=/api/(?<path>.*),/$\{path}
+
+
+
+jwt:
+  secret:
+    key: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK

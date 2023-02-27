@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".search.CategoryActivity">
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:flow_maxElementsWrap="3"
+        app:flow_wrapMode="aligned"
+        app:flow_horizontalGap="72dp"
+        app:flow_verticalGap="72dp"
+        android:padding="72dp"
+        app:constraint_referenced_ids="btn_math, btn_english, btn_korean, btn_science, btn_computer, btn_etc"
+        />
+
+    <Button
+        android:id="@+id/btn_math"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:background="@drawable/math"
+        android:gravity="bottom|center_horizontal"
+        />
+
+    <Button
+        android:id="@+id/btn_english"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:background="@drawable/english"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/btn_korean"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:background="@drawable/korean"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/btn_science"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:background="@drawable/science"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/btn_computer"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:background="@drawable/coding"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/btn_etc"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:background="@drawable/etc"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="수학"
+        app:layout_constraintTop_toBottomOf="@id/btn_math"
+        app:layout_constraintStart_toStartOf="@id/btn_math"
+        app:layout_constraintEnd_toEndOf="@id/btn_math"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/black"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="영어"
+        app:layout_constraintTop_toBottomOf="@id/btn_english"
+        app:layout_constraintStart_toStartOf="@id/btn_english"
+        app:layout_constraintEnd_toEndOf="@id/btn_english"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/black"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="국어"
+        app:layout_constraintTop_toBottomOf="@id/btn_korean"
+        app:layout_constraintStart_toStartOf="@id/btn_korean"
+        app:layout_constraintEnd_toEndOf="@id/btn_korean"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/black"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="과학"
+        app:layout_constraintTop_toBottomOf="@id/btn_science"
+        app:layout_constraintStart_toStartOf="@id/btn_science"
+        app:layout_constraintEnd_toEndOf="@id/btn_science"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/black"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="컴퓨터"
+        app:layout_constraintTop_toBottomOf="@id/btn_computer"
+        app:layout_constraintStart_toStartOf="@id/btn_computer"
+        app:layout_constraintEnd_toEndOf="@id/btn_computer"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/black"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="기타"
+        app:layout_constraintTop_toBottomOf="@id/btn_etc"
+        app:layout_constraintStart_toStartOf="@id/btn_etc"
+        app:layout_constraintEnd_toEndOf="@id/btn_etc"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/black"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
