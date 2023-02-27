@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="category_item">
+        <item>수학</item>
+        <item>과학</item>
+        <item>영어</item>
+        <item>국어</item>
+        <item>컴퓨터</item>
+        <item>기타</item>
+    </string-array>
+</resources>

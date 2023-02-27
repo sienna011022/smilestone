@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_marginBottom="6dp"
+    >
+
+    <TextView
+        android:id="@+id/message_inout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center"
+        />
+    <TextView
+        android:id="@+id/message_nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/message_inout"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="12dp"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        />
+
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/message_nickname"
+        app:layout_constraintTop_toBottomOf="@id/message_nickname"
+        android:layout_marginHorizontal="12dp"
+        android:orientation="horizontal"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="2dp"
+            >
+
+            <TextView
+                android:id="@+id/partner_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/message_background"
+                app:layout_constraintBottom_toBottomOf="@id/message_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="10sp"
+                android:textColor="#979797"
+                android:layout_marginStart="2dp"
+                />
+
+            <TextView
+                android:id="@+id/my_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/message_background"
+                app:layout_constraintBottom_toBottomOf="@id/message_background"
+                android:textSize="10sp"
+                android:textColor="#979797"
+                android:layout_marginEnd="2dp"
+                />
+
+            <ImageView
+                android:id="@+id/message_background"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="@id/message_content"
+                app:layout_constraintTop_toTopOf="@id/message_content"
+                app:layout_constraintEnd_toEndOf="@id/message_content"
+                app:layout_constraintBottom_toBottomOf="@id/message_content"
+                android:background="@drawable/partner_chat"
+                />
+
+            <TextView
+                android:id="@+id/message_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:maxWidth="200dp"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="6dp"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toEndOf="@id/my_time"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/partner_time"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+</LinearLayout>
